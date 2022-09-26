@@ -1,3 +1,5 @@
+# Desafio Pandas - UADE FinLab
+# Udemy courses information
 ,course_id,course_title,url,is_paid,price,num_subscribers,num_reviews,num_lectures,level,content_duration,published_timestamp,subject
 0,1070968,Ultimate Investment Banking Course,https://www.udemy.com/ultimate-investment-banking-course/,True,200.0,2147.0,23.0,51.0,All Levels,1.5,2017-01-18 20:58:58+00:00,Business Finance
 1,1113822,Complete GST Course & Certification - Grow Your CA Practice,https://www.udemy.com/goods-and-services-tax/,True,75.0,2792.0,923.0,274.0,All Levels,39.0,2017-03-09 16:34:20+00:00,Business Finance
