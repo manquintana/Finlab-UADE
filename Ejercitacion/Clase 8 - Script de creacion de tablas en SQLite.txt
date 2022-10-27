@@ -1,0 +1,203 @@
+import sqlite3
+
+connection=sqlite3.connect("Diplo_DB.db") # Al ejecutar esta linea por primera vez creara la base de datos en la misma ubicación que nuestro script.
+# Las veces sucesivas, solo se conectará.
+
+
+try:
+    connection.execute("""CREATE TABLE Clientes (
+                            ClienteID INTEGER PRIMARY KEY AUTOINCREMENT,
+                            Nombre TEXT,
+                            Direccion TEXT,
+                            Ciudad TEXT,
+                            CP INTEGER,
+                            Pais TEXT
+                        )""")
+    print('Tabla Clientes creada')
+except sqlite3.OperationalError:
+    print("Error al crear la tabla")
+connection.close() # Luego de ejecutar las instrucciones, es una buena práctica siempre cerrar la conexión.
+
+connection=sqlite3.connect("Diplo_DB.db") # Al ejecutar esta linea por primera vez creara la base de datos en la misma ubicación que nuestro script.
+# Las veces sucesivas, solo se conectará.
+
+try:
+    connection.execute("""CREATE TABLE Articulos(
+                            ArticuloID INTEGER PRIMARY KEY AUTOINCREMENT,
+                            Descripcion TEXT,
+                            Precio REAL
+                          )""")
+    print('Tabla Articulos creada')
+except sqlite3.OperationalError:
+    print("Error al crear la tabla")
+connection.close()
+
+connection=sqlite3.connect("Diplo_DB.db")
+try:
+    connection.execute("""CREATE TABLE Facturas (
+                            FacturaID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            ClienteID INTEGER NOT NULL,
+                            Fecha TEXT NOT NULL,
+                            FOREIGN KEY (ClienteID) REFERENCES Clientes (ClienteID) 
+                        )""")
+    print('Tabla Facturas creada')
+except sqlite3.OperationalError:
+    print("Error al crear la tabla")
+connection.close()
+
+connection=sqlite3.connect("Diplo_DB.db")
+try:
+    connection.execute("""CREATE TABLE Detalles (
+                            FacturaID INTEGER  NOT NULL,
+                            ArticuloID INTEGER  NOT NULL,
+                            Cantidad INTEGER NOT NULL,
+                            Precio REAL NOT NULL,
+                            PRIMARY KEY (FacturaID, ArticuloID),
+                            FOREIGN KEY (FacturaID) REFERENCES Facturas (FacturaID),
+                            FOREIGN KEY (ArticuloID) REFERENCES Articulos (ArticuloID)
+                        )""")
+    print('Tabla Detalles creada')
+except sqlite3.OperationalError:
+    print("Error al crear la tabla")
+connection.close()
+
+connection=sqlite3.connect("Diplo_DB.db")
+cursor = connection.cursor()
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio) 
+              VALUES ('Resma A4', 148.0)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Resma Oficio', 150.0)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio) 
+              VALUES ('Resma Carta', 149.0)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Teclado', 1150.50)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Mouse', 848.0)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Lapicera azul BIC', 110.0)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Carpeta Oficio', 750.0)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Goma de borrar', 150.75)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Corrector líquido', 290)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Repuesto agenda 2022', 780.75)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Lapiz negro', 89)''')
+cursor.execute('''INSERT INTO Articulos(Descripcion, Precio)
+              VALUES ('Goma de borrar', 97)''')
+connection.commit() # Hacemos commit para persistir los cambios en la base
+print('Cambios insertados')
+cursor.close()
+connection.close()
+
+connection=sqlite3.connect("Diplo_DB.db")
+cursor = connection.cursor()
+cursor.execute('''INSERT INTO Clientes(Nombre, Direccion, Ciudad, CP, Pais) 
+              VALUES ('Juan Lopez', 'Lima 956', 'CABA', 1582, 'Argentina')''')
+cursor.execute('''INSERT INTO Clientes(Nombre, Direccion, Ciudad, CP, Pais) 
+              VALUES ('Esteban Fernandez', 'Perú 867', 'CABA', 2652, 'Argentina')''')
+cursor.execute('''INSERT INTO Clientes(Nombre, Direccion, Ciudad, CP, Pais) 
+              VALUES ('Anibal Freijo', 'Estados Unidos 230', 'Lima', 4282, 'Perú')''')
+cursor.execute('''INSERT INTO Clientes(Nombre, Direccion, Ciudad, CP, Pais) 
+              VALUES ('Anthony Kiedis', '152 street 4242', 'California', 122, 'Estados Unidos')''')
+cursor.execute('''INSERT INTO Clientes(Nombre, Direccion, Ciudad, CP, Pais) 
+              VALUES ('Antonio Quispe', 'Lavalle 2552', 'La paz', 65182, 'Bolivia')''')
+cursor.execute('''INSERT INTO Clientes(Nombre, Direccion, Ciudad, CP, Pais) 
+              VALUES ('Jorge Poroto', 'Av. Rivadavia 25425', 'Buenos Aires', 1522, 'Argentina')''')
+cursor.execute('''INSERT INTO Clientes(Nombre, Direccion, Ciudad, CP, Pais) 
+              VALUES ('Manuel Benitez', 'De la palma 1254', 'Mburucuyá', 12822, 'Argentina')''')
+connection.commit() # Hacemos commit para persistir los cambios en la base
+print('Cambios insertados')
+cursor.close()
+connection.close()
+
+connection=sqlite3.connect("Diplo_DB.db")
+cursor = connection.cursor()
+cursor.execute('''INSERT INTO Facturas (ClienteID, Fecha) 
+              VALUES (1, '2022-10-05')''')
+cursor.execute('''INSERT INTO Facturas (ClienteID, Fecha) 
+              VALUES (1, '2021-10-06')''')
+cursor.execute('''INSERT INTO Facturas (ClienteID, Fecha) 
+              VALUES (3, '2022-02-16')''')
+cursor.execute('''INSERT INTO Facturas (ClienteID, Fecha) 
+              VALUES (3, '2021-12-26')''')
+cursor.execute('''INSERT INTO Facturas (ClienteID, Fecha) 
+              VALUES (3, '2021-10-06')''')
+cursor.execute('''INSERT INTO Facturas (ClienteID, Fecha) 
+              VALUES (2, '2021-08-12')''')
+cursor.execute('''INSERT INTO Facturas (ClienteID, Fecha) 
+              VALUES (7, '2022-01-28')''')
+cursor.execute('''INSERT INTO Facturas (ClienteID, Fecha) 
+              VALUES (5, '2021-10-06')''')
+connection.commit()
+print('Cambios insertados')
+cursor.close()
+connection.close()
+
+connection=sqlite3.connect("Diplo_DB.db")
+cursor = connection.cursor()
+''' Cliente 1'''
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (1, 1, 1, 148)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (1, 2, 1, 150)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (1, 3, 1, 149)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (2, 1, 2, 140)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (2, 2, 2, 140)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (2, 3, 2, 145)''')
+
+''' Cliente 3'''
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (3, 4, 5, 1050.5)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (3, 5, 5, 840)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (4, 8, 10, 120)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (4, 9, 3, 250)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (4, 6, 11, 75)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (5, 7, 10, 500)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (5, 10, 1,  760.5)''')
+
+''' Cliente 2''' 
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (6, 10, 2,  760.5)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (6, 1, 12,  85.75)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (6, 3, 3,  90.75)''')
+
+''' Cliente 7''' 
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (7, 10, 3,  750.5)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (7, 1, 3,  145.5)''')
+
+''' Cliente 5''' 
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (8, 12, 10,  97)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (8, 11, 7,  85)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (8, 3, 4,  110)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (8, 1, 4,  120)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (8, 9, 2, 280)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (8, 6, 7, 105)''')
+cursor.execute('''INSERT INTO Detalles (FacturaID, ArticuloID, Cantidad, Precio)
+				VALUES (8, 5, 1, 820.80)''')
+connection.commit()
+print('Cambios insertados')
+cursor.close()
+connection.close()
