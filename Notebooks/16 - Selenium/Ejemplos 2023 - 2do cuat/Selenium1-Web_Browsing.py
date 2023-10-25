@@ -20,24 +20,26 @@ driver = webdriver.Chrome(service=service, options=options)
 url = 'https://www.google.com/'
 driver.get(url)
 
-time.sleep(2)
+time.sleep(5)
 
 #text_input = driver.find_element_by_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/textarea')
 text_input = driver.find_element('xpath','//*[@id="APjFqb"]')
-text_input.send_keys("Hello World")
+text_input.send_keys("Hermetica")
 
-time.sleep(2)
+time.sleep(5)
 
 # search_button = driver.find_element_by_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
 # search_button.click()
 clic_out = driver.find_element('xpath', '/html/body/div[1]/div[3]/form/div[1]')
 clic_out.click()
+
+time.sleep(5)
+
 search_button = driver.find_element('xpath', '/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
 search_button.click()
 
 # actions = ActionChains(driver)
 # actions.send_keys(Keys.RETURN)
 # actions.perform()
-
 
 time.sleep(5)
